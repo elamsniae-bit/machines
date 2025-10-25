@@ -9,13 +9,13 @@
       $email = $_POST['email'];
       $password = $_POST['password'];
 
-      $query = mysqli_query($connection, "SELECT * FROM `admin` WHERE `email`= '$email' AND `password` = '$password' ");
+      $query = $connection->query( "SELECT * FROM `admin` WHERE `email`= '$email' AND `password` = '$password' ");
 
-      if (mysqli_num_rows($query) > 0 ){
+      if (db_num_rows($query) > 0 ){
 
 
         session_start();
-        $data = mysqli_fetch_assoc($query);
+        $data = db_fetch_assoc($query);
         $_SESSION['admin_id'] = $data['id'];
 
         session_write_close();

@@ -12,12 +12,12 @@
         if ($password != "" && $email != ""){
 
 
-            $query = mysqli_query($connection, "SELECT * FROM `client` WHERE `email` = '$email' AND `password` = '$password'");
+            $query = $connection->query( "SELECT * FROM `client` WHERE `email` = '$email' AND `password` = '$password'");
 
-            if (mysqli_num_rows($query) > 0) {
+            if (db_num_rows($query) > 0) {
 
                 
-                $data = mysqli_fetch_assoc($query);
+                $data = db_fetch_assoc($query);
 
                 $_SESSION['user_id'] = $data['id'];
     

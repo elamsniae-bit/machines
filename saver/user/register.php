@@ -32,9 +32,9 @@
                         }else{
 
 
-                            $query = mysqli_query($connection,"SELECT * FROM `client` WHERE `email` = '$email'");
+                            $query = $connection->query("SELECT * FROM `client` WHERE `email` = '$email'");
 
-                            if (mysqli_num_rows($query) > 0 ){
+                            if (db_num_rows($query) > 0 ){
 
 
                                 $data = ['error',"already have a user with your email",""];
@@ -46,7 +46,7 @@
 
                                  
 
-                                $query = mysqli_query($connection,"INSERT INTO `client`(`name`, `email`, `password`,`phone`) VALUES ('$username','$email','$password1','$phone')");
+                                $query = $connection->query("INSERT INTO `client`(`name`, `email`, `password`,`phone`) VALUES ('$username','$email','$password1','$phone')");
 
                                 if ($query){
 

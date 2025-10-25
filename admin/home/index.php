@@ -92,11 +92,11 @@
 
                           <?php 
                           
-                              $query = mysqli_query($connection, "SELECT * FROM `client`");
+                              $query = $connection->query( "SELECT * FROM `client`");
 
-                              if ( mysqli_num_rows($query) > 0) {
+                              if ( db_num_rows($query) > 0) {
                                 $count = 0;
-                                while ( $userlist = mysqli_fetch_assoc($query) )  { $count++; ?>
+                                while ( $userlist = db_fetch_assoc($query) )  { $count++; ?>
 
                                     <tr>
                                     

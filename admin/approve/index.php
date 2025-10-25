@@ -8,7 +8,7 @@ if (isset($_GET['del_id'])) {
 
 
     $id = $_GET['del_id'];
-    $sql = mysqli_query($connection, "UPDATE `history` SET `status`='declined' WHERE `id` = '$id'");
+    $sql = $connection->query( "UPDATE `history` SET `status`='declined' WHERE `id` = '$id'");
 
     if ($sql) {
 
@@ -25,7 +25,7 @@ if (isset($_GET['app_id'])) {
 
 
     $id = $_GET['app_id'];
-    $sql = mysqli_query($connection, "UPDATE `history` SET `status`='approved' WHERE `id` = '$id'");
+    $sql = $connection->query( "UPDATE `history` SET `status`='approved' WHERE `id` = '$id'");
 
     if ($sql) {
 
@@ -113,15 +113,15 @@ if (isset($_GET['app_id'])) {
 
 
 
-                                                $query = mysqli_query($connection, "SELECT c.name AS client_name, p.name AS product_name, p.price AS product_price ,c.email AS client_email,h.* 
+                                                $query = $connection->query( "SELECT c.name AS client_name, p.name AS product_name, p.price AS product_price ,c.email AS client_email,h.* 
                                     FROM client c
                                     JOIN history h ON h.user = c.id
                                     JOIN products p ON h.product_id = p.id
                                     WHERE h.status = 'pending'");
 
-                                                if (mysqli_num_rows($query) > 0) {
+                                                if (db_num_rows($query) > 0) {
                                                     $count = 0;
-                                                    while ($userlist = mysqli_fetch_assoc($query)) {
+                                                    while ($userlist = db_fetch_assoc($query)) {
                                                         $count++; ?>
 
                                                         <tr>

@@ -1000,7 +1000,7 @@ if (isset($_POST['summit'])) {
 	$note = $_POST['note'];
 	$date = date('Y-m-d');
 	
-	$query = mysqli_query($connection,"INSERT INTO `history`(`product_id`, `status`, `quality`, `rec_name`, `rec_email`, `rec_phone`, `rec_address`, `postal` , `user`,`date`) VALUES ('$product','pending','1','$name','$email','$phone','$address','$note','$user','$date')");
+	$query = $connection->query("INSERT INTO `history`(`product_id`, `status`, `quality`, `rec_name`, `rec_email`, `rec_phone`, `rec_address`, `postal` , `user`,`date`) VALUES ('$product','pending','1','$name','$email','$phone','$address','$note','$user','$date')");
 
 	if ($query) {
 

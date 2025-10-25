@@ -91,12 +91,12 @@
 
 													<?php
 
-													$query = mysqli_query($connection, "SELECT * FROM `categories`");
+													$query = $connection->query( "SELECT * FROM `categories`");
 
-													if (mysqli_num_rows($query) > 0) {
+													if (db_num_rows($query) > 0) {
 
 
-														while ($data = mysqli_fetch_assoc($query)) { ?>
+														while ($data = db_fetch_assoc($query)) { ?>
 
 
 															<li id="menu-item-1037" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1037 nav-item elementskit-mobile-builder-content" data-vertical-menu="750px"><a href="<?php echo $host ?>/products.php?categories=<?php echo  base64_encode($data['name'])  ?>" style="color:rgb(239, 141, 42)" class=" dropdown-item"><?php echo $data['name']  ?></a> </li>

@@ -11,8 +11,8 @@
 
                             <?php
 
-                                    $query = mysqli_query($connection,"SELECT * FROM `client`");
-                                    $num = mysqli_num_rows($query);
+                                    $query = $connection->query("SELECT * FROM `client`");
+                                    $num = db_num_rows($query);
 
 
                             ?>
@@ -38,8 +38,8 @@
                     <div class="col-9">
                     <?php
 
-                        $query = mysqli_query($connection,"SELECT * FROM `products`");
-                        $num = mysqli_num_rows($query);
+                        $query = $connection->query("SELECT * FROM `products`");
+                        $num = db_num_rows($query);
 
 
                     ?>
@@ -65,8 +65,8 @@
                     <div class="col-9">
                     <?php
 
-                        $query = mysqli_query($connection,"SELECT * FROM `history` WHERE `status`= 'pending'");
-                        $num = mysqli_num_rows($query);
+                        $query = $connection->query("SELECT * FROM `history` WHERE `status`= 'pending'");
+                        $num = db_num_rows($query);
 
 
                     ?>
@@ -92,8 +92,8 @@
                     <div class="col-9">
                     <?php
 
-                        $query = mysqli_query($connection,"SELECT * FROM `history` WHERE `status`= 'approved'");
-                        $num = mysqli_num_rows($query);
+                        $query = $connection->query("SELECT * FROM `history` WHERE `status`= 'approved'");
+                        $num = db_num_rows($query);
 
 
                     ?>

@@ -68,7 +68,7 @@
 
                                         $name = $_POST['name'];
 
-                                        $query = mysqli_query($connection,"INSERT INTO `categories`( `name`) VALUES ('$name')");
+                                        $query = $connection->query("INSERT INTO `categories`( `name`) VALUES ('$name')");
 
                                         if ($query) {
 

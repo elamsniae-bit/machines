@@ -355,8 +355,8 @@
                         <?php
 
                         $user = $_SESSION['user_id'];
-                        $query = mysqli_query($connection, "SELECT * FROM `history` WHERE  `user` = '$user' ");
-                        $amount = mysqli_num_rows($query);
+                        $query = $connection->query( "SELECT * FROM `history` WHERE  `user` = '$user' ");
+                        $amount = db_num_rows($query);
 
                         ?>
                         <div class="num" data-start="0" data-end="83" data-postfix="" data-duration="1500" data-delay="0"><?php echo $amount ?></div>
@@ -369,8 +369,8 @@
                         <?php
 
                         $user = $_SESSION['user_id'];
-                        $query = mysqli_query($connection, "SELECT * FROM `history` WHERE  `user` = '$user' AND  `status`='pending' ");
-                        $amount = mysqli_num_rows($query);
+                        $query = $connection->query( "SELECT * FROM `history` WHERE  `user` = '$user' AND  `status`='pending' ");
+                        $amount = db_num_rows($query);
 
                         ?>
                         <div class="icon"><i class="entypo-chart-bar"></i></div>
@@ -386,8 +386,8 @@
                         <?php
 
                         $user = $_SESSION['user_id'];
-                        $query = mysqli_query($connection, "SELECT * FROM `history` WHERE  `user` = '$user' AND  `status`='approved' ");
-                        $amount = mysqli_num_rows($query);
+                        $query = $connection->query( "SELECT * FROM `history` WHERE  `user` = '$user' AND  `status`='approved' ");
+                        $amount = db_num_rows($query);
 
                         ?>
                         <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><?php echo $amount ?></div>
@@ -401,8 +401,8 @@
                         <?php
 
                         $user = $_SESSION['user_id'];
-                        $query = mysqli_query($connection, "SELECT * FROM `history` WHERE  `user` = '$user' AND  `status`='declined' ");
-                        $amount = mysqli_num_rows($query);
+                        $query = $connection->query( "SELECT * FROM `history` WHERE  `user` = '$user' AND  `status`='declined' ");
+                        $amount = db_num_rows($query);
 
                         ?>
                         <div class="icon"><i class="entypo-rss"></i></div>
@@ -442,13 +442,13 @@
                                 <?php
 
                                 $user = $_SESSION['user_id'];
-                                $query = mysqli_query($connection, "SELECT * FROM history h
+                                $query = $connection->query( "SELECT * FROM history h
                                 JOIN products p ON h.product_id = p.id
                                 WHERE h.user = '$user'");
-                                if (mysqli_num_rows($query) > 0) {
+                                if (db_num_rows($query) > 0) {
 
                                     $count = 0;
-                                    while ($data = mysqli_fetch_assoc($query)) { $count++
+                                    while ($data = db_fetch_assoc($query)) { $count++
                                          ?>
 
 

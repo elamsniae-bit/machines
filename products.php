@@ -590,11 +590,11 @@
         <?php
         // Get the category from the URL
         $categorie = base64_decode($_GET['categories']);
-        $query = mysqli_query($connection, "SELECT * FROM `products` WHERE `categorie` = '$categorie'");
+        $query = $connection->query( "SELECT * FROM `products` WHERE `categorie` = '$categorie'");
 
         // Check if products exist in the category
-        if (mysqli_num_rows($query) > 0) {
-            while ($load = mysqli_fetch_assoc($query)) { ?>
+        if (db_num_rows($query) > 0) {
+            while ($load = db_fetch_assoc($query)) { ?>
                 <div class="product-item">
                     <!-- Product Image -->
                     <div class="elementor-element elementor-element-0ecd35b elementor-widget elementor-widget-image" data-id="0ecd35b" data-element_type="widget" data-widget_type="image.default">

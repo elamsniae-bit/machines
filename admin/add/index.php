@@ -75,13 +75,13 @@
 
                                             <?php 
 
-                                                    $query = mysqli_query($connection, "SELECT * FROM `categories`");
+                                                    $query = $connection->query( "SELECT * FROM `categories`");
 
-                                                    if(mysqli_num_rows($query) > 0){
+                                                    if(db_num_rows($query) > 0){
 
 
 
-                                                        while ($data = mysqli_fetch_assoc($query)){ ?>
+                                                        while ($data = db_fetch_assoc($query)){ ?>
 
 
 
@@ -174,7 +174,7 @@
                                     $product_image = $fileNewName;
                                     // echo "<script> alert('$product_condition') </script>";
 
-                                    $query = mysqli_query($connection,"INSERT INTO `products`(`weight`,`des`,`price`, `name`, `brand`, `categorie`, `model`, `productcondition`, `year`, `image`) 
+                                    $query = $connection->query("INSERT INTO `products`(`weight`,`des`,`price`, `name`, `brand`, `categorie`, `model`, `productcondition`, `year`, `image`) 
                                             VALUES ('$product_weight','$product_des','$product_price', '$product_name', '$product_brand', '$product_categorie', '$product_model', '$product_condition', '$product_year','$product_image')");
 
                                     if ($query) {
