@@ -1,173 +1,301 @@
 # Overview
 
-This is a heavy equipment rental and marketplace website built with PHP and SQLite. The site features a custom admin dashboard for managing equipment inventory, categories, and customer orders. Originally built for MySQL/MariaDB, it has been converted to use SQLite3 for compatibility with the Replit environment.
+This is a modern heavy equipment rental and sales marketplace built with Next.js 16, React 19, MongoDB, and NextAuth.js. The platform features a professional, responsive design with comprehensive admin and user dashboards, multi-language support, and a complete e-commerce workflow for both buying and renting equipment.
 
-The project includes:
-- Public-facing equipment rental/sales website
-- Custom admin dashboard for inventory management
-- User authentication and authorization system
-- Product catalog with categories (Excavators, Dump Trucks, Crane Trucks, Graders, Compactors, Forklifts, Wheel Loaders, Bulldozers, Skid-Steer Loaders, Backhoe Loaders, Chainsaw)
-- Image upload functionality for equipment listings
-- Order history tracking system
+## Key Features
+
+- **Professional Landing Page**: Modern UI with hero section, testimonials, category browsing, and industry knowledge blog
+- **Product Catalog**: Browse, search, and filter heavy equipment with BUY and RENT options
+- **Authentication System**: Secure login for both administrators and customers using NextAuth.js
+- **Admin Dashboard**: Full CRUD operations for products, categories, users, and orders with real-time analytics
+- **User Dashboard**: Customer portal for viewing orders and managing account
+- **Multi-language Support**: International marketplace with language selector (English, Spanish, French, German, Chinese, Arabic)
+- **Responsive Design**: Mobile-first design that works seamlessly on all devices
+- **MongoDB Database**: Scalable NoSQL database with Mongoose ODM
 
 # User Preferences
 
-Preferred communication style: Simple, everyday language.
+- Preferred communication style: Simple, everyday language
+- Color scheme: Orange (#f97316), Black (#000000), White (#ffffff)
+- Design style: Professional, sharp, and modern (not AI-generated looking)
 
 # Recent Changes (October 25, 2025)
 
-## Replit Environment Setup
-- Installed PHP 8.3 with SQLite3 support
-- Converted MySQL database to SQLite3 (heavyequip.db)
-- Modified all mysqli_* function calls to work with SQLite3 object methods
-- Configured PHP development server on port 5000
-- Set up environment-aware host configuration using REPLIT_DEV_DOMAIN
-- Configured deployment with autoscale mode
+## Complete Platform Rebuild
 
-## Database Migration
-- Created SQLite3 database with tables: admin, categories, client, history, products
-- Implemented custom DBConnection class extending SQLite3 for compatibility
-- Added helper functions (db_num_rows, db_fetch_assoc, db_fetch_array) for result set handling
+### Technology Stack Migration
+- **Frontend**: Next.js 16 with React 19 and TypeScript
+- **Styling**: Tailwind CSS 4
+- **Database**: MongoDB with Mongoose ODM
+- **Authentication**: NextAuth.js v5 (Auth.js)
+- **Internationalization**: next-intl for multi-language support
+- **Icons**: React Icons library
+
+### Database Architecture
+- Migrated from PHP/SQLite to Next.js/MongoDB
+- Created Mongoose schemas for Product, User, Order, and Category models
+- Implemented connection pooling for optimal performance
+- Added seed script for initial data population
+
+### Authentication & Authorization
+- Implemented NextAuth.js with credentials provider
+- Role-based access control (admin/user roles)
+- Protected routes with middleware
+- Secure password hashing with bcryptjs
+- Session management with JWT
+
+### User Interface Redesign
+- Professional landing page matching uploaded design references
+- Sticky header with language selector
+- Modern product cards with BUY/RENT buttons
+- Testimonials and trust indicators
+- Blog-style industry knowledge section
+- Responsive footer with social links
+
+### Admin Features
+- Secure admin login at `/login`
+- Access admin dashboard via `/admin` URL (no navbar button)
+- Full CRUD operations for:
+  - Products (add, edit, delete, manage inventory)
+  - Categories (create, edit, delete)
+  - Orders (view, update status)
+  - Analytics dashboard with statistics
+
+### Customer Features
+- User registration and login
+- Personal dashboard at `/dashboard`
+- Order history and tracking
+- Profile management
+- Buy or rent equipment options
 
 # System Architecture
 
 ## Frontend Architecture
 
-**Public Website**
-- Static HTML/CSS with Elementor-style design elements
-- Bootstrap 3.3.5 for responsive grid system
-- Orange and black color scheme with heavy equipment imagery
-- Navigation: Home, About us, Testimonials, FAQs, Products, Contact, Account
+### Pages
+- `/` - Landing page with hero, categories, testimonials, and blog sections
+- `/products` - Product catalog with search and filtering
+- `/products/[id]` - Individual product details
+- `/login` - Authentication page
+- `/admin` - Protected admin dashboard
+- `/dashboard` - Protected user dashboard
+- `/checkout` - Order checkout flow (with buy/rent selection)
 
-**Admin Dashboard**
-- Neon admin theme with dark UI
-- Located in `/admin` directory
-- Material Design Icons (MDI) for interface elements
-- Chart.js for analytics visualization
-- File upload interface for product images
+### Components
+- `Header.tsx` - Sticky navigation with language selector
+- `Footer.tsx` - Site footer with links and social media
+- `AdminDashboard.tsx` - Admin panel interface
+- `UserDashboard.tsx` - Customer portal interface
+
+### Styling
+- Tailwind CSS 4 for utility-first styling
+- Custom orange/black/white color scheme
+- Responsive breakpoints for mobile, tablet, and desktop
+- Hover states and transitions for interactive elements
 
 ## Backend Architecture
 
-**PHP Application Structure**
-- `/saver/connection.php` - Database connection and helper functions
-- `/saver/admin/authorization.php` - Admin authentication
-- `/saver/user/` - User authentication and registration
-- `/admin/` - Admin panel pages (home, products, categories, approvals)
-- `/app/dashboard/` - User dashboard
-- `/components/` - Reusable UI components (navigation, sidebars)
-- `/process.php` - Form processing logic
-- `/products.php` - Product listing page
+### API Routes
+- `/api/auth/[...nextauth]` - Authentication endpoints
+- `/api/products` - Product CRUD operations (GET, POST)
+- `/api/products/[id]` - Individual product operations (GET, PUT, DELETE)
+- `/api/categories` - Category management (GET, POST)
+- `/api/orders` - Order management (GET, POST)
 
-**Database Layer**
-- SQLite3 database (heavyequip.db)
-- Custom DBConnection class with mysqli-compatible methods
-- Tables: admin, categories, client, history, products
-- Session-based authentication system
+### Database Models
 
-**File Upload System**
-- Product images stored in `/upload/` directory
-- Supports JPG, PNG, WEBP formats
-- Unique filename generation with timestamp prefixes
+**Product Model**
+- name, brand, category, price, rentalPrice
+- model, condition, year, image, images
+- description, weight, specifications
+- available, featured (boolean flags)
+- timestamps (createdAt, updatedAt)
+
+**User Model**
+- name, email, password (hashed)
+- phone, role (admin/user), address
+- timestamps
+
+**Category Model**
+- name, slug, description, image
+- timestamps
+
+**Order Model**
+- user (reference to User)
+- items (array of products with type: buy/rent)
+- totalAmount, status, paymentMethod, paymentStatus
+- shippingAddress (embedded object)
+- timestamps
+
+### Authentication Flow
+1. User submits credentials to `/api/auth/[...nextauth]`
+2. NextAuth validates against MongoDB User collection
+3. JWT token generated with user ID and role
+4. Middleware protects routes based on authentication status
+5. Admin routes check for 'admin' role in JWT
 
 ## Data Layer
 
-### Database Schema
+### MongoDB Connection
+- Connection pooling with mongoose
+- Environment variable: `MONGODB_URI`
+- Automatic reconnection on failure
+- Cached connection for serverless optimization
 
-**admin table**
-- id, username, email, password
-- Default admin credentials available in database
+### Database Seeding
+- Script: `scripts/seed.ts`
+- Run with: `npm run seed`
+- Populates initial:
+  - Categories from lib/data.json
+  - Products with pricing and rental options
+  - Default admin user (admin@heavyquips.com / admin123)
 
-**categories table**
-- id, name
-- Pre-populated with equipment categories
+## Environment Variables
 
-**client table**
-- id, name, email, password, phone
-- Customer account information
+Required environment variables:
 
-**products table**
-- id, price, name, brand, categorie, model, productcondition, year, image, des, weight
-- Equipment inventory listings
-
-**history table**
-- id, product_id, status, quality, rec_name, rec_email, rec_phone, rec_address, postal, user, date
-- Tracks rental/purchase history and approvals
+```
+MONGODB_URI=<your-mongodb-connection-string>
+AUTH_SECRET=<random-secret-key-for-jwt>
+NEXTAUTH_URL=http://localhost:5000
+```
 
 ## Design Patterns
 
-**Session Management**
-- PHP sessions for authentication state
-- Session started in connection.php
-- Authorization checks on admin pages
+### Server Components
+- Pages use React Server Components by default
+- Data fetching on the server for better performance
+- Reduced client-side JavaScript
 
-**Environment Configuration**
-- REPLIT_DEV_DOMAIN environment variable for dynamic host URLs
-- Fallback to localhost:5000 for local development
+### Client Components
+- Interactive components marked with 'use client'
+- State management with React hooks
+- Form handling and user interactions
 
-**Database Abstraction**
-- DBConnection class extends SQLite3
-- Provides mysqli-compatible method names (real_escape_string, insert_id, affected_rows, error)
-- Global helper functions for result set iteration
+### API Security
+- Protected routes check authentication status
+- Admin operations verify admin role
+- Input validation on all endpoints
+- Password hashing with bcrypt (10 rounds)
 
-# External Dependencies
-
-## PHP Extensions Required
-- SQLite3 (PDO_SQLite, sqlite3)
-- GD (for image processing)
-- Session support
-- MBString
-- JSON
-
-## JavaScript Libraries
-
-**Admin Dashboard**
-- jQuery 3.7.1
-- Bootstrap 3.3.5
-- Chart.js 2.9.3 for analytics
-- Morris.js for charts
-- jVectorMap 1.2.2
-- Owl Carousel 2.3.4
-- Select2 for dropdowns
-- GSAP TweenMax 1.18.0 for animations
-
-**Public Website**
-- jQuery with Migrate plugin
-- Elementor frontend assets
-- MetForm for contact forms
-- Cute Alert for notifications
-
-## CSS Frameworks
-
-- Bootstrap 3.3.5
-- Material Design Icons (MDI)
-- Font Awesome 5.15.3
-- Flag Icon CSS
-- Neon admin theme
-- Elementor styles
+### Responsive Design
+- Mobile-first approach
+- Breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px)
+- Flexible grid layouts
+- Touch-friendly interactive elements
 
 # Development Setup
 
-## Running Locally
-1. PHP 8.2+ with SQLite3 extension
-2. Run: `php -S 0.0.0.0:5000`
-3. Access at http://localhost:5000
+## Prerequisites
+- Node.js 20+
+- MongoDB (local or Atlas cloud)
 
-## Database
-- SQLite database: `heavyequip.db` (in project root)
-- No external database server required
-- Database is file-based and portable
+## Installation
 
-## Admin Access
-- URL: `/admin/auth/`
-- Default credentials available in database (see admin table)
+1. Install dependencies:
+```bash
+npm install
+```
 
-## File Permissions
-- `/upload/` directory must be writable for product image uploads
-- Database file must be writable by PHP process
+2. Set up environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your MongoDB connection string and secrets
+```
 
-# Deployment
+3. Seed the database:
+```bash
+npm run seed
+```
 
-- Configured for Replit Autoscale deployment
-- Runs PHP built-in server on port 5000
-- SQLite database included in deployment
-- No build step required
+4. Run development server:
+```bash
+npm run dev
+```
+
+5. Access the application:
+- Frontend: http://localhost:5000
+- Admin login: http://localhost:5000/login
+- Admin dashboard: http://localhost:5000/admin
+
+## Default Credentials
+
+**Admin Account**
+- Email: admin@heavyquips.com
+- Password: admin123
+
+## Deployment
+
+The application is configured for Replit deployment with autoscale mode:
+- Runs Next.js server on port 5000
+- Environment variables managed through Replit Secrets
+- MongoDB connection via environment variable
+
+# External Dependencies
+
+## NPM Packages
+
+**Core**
+- next@16.0.0
+- react@19.2.0
+- react-dom@19.2.0
+
+**Database**
+- mongoose@^8.19.2
+
+**Authentication**
+- next-auth@^5.0.0-beta.29
+- bcryptjs@^3.0.2
+
+**Internationalization**
+- next-intl@^4.4.0
+
+**UI & Icons**
+- tailwindcss@^4
+- react-icons@^5.5.0
+
+**Development**
+- typescript@^5
+- tsx@latest (for running TypeScript scripts)
+
+# Product Categories
+
+The marketplace supports the following equipment categories:
+- Excavators
+- Backhoe Loaders
+- Dump Trucks
+- Crane Trucks
+- Graders
+- Compactors
+
+Each category can be managed through the admin dashboard.
+
+# Feature Roadmap
+
+## Completed Features ✅
+- Modern Next.js architecture
+- MongoDB database integration
+- Admin and user authentication
+- Professional UI/UX design
+- Product catalog with search/filter
+- Buy and Rent functionality
+- Admin CRUD operations
+- User dashboard
+- Multi-language selector
+
+## Pending Enhancements
+- Checkout flow completion
+- Payment integration (bank transfer or crypto)
+- Email notifications
+- Advanced product search
+- Image upload for products
+- Order tracking system
+- Customer reviews and ratings
+- Inventory management alerts
+- Analytics and reporting
+
+# Contact Information
+
+- Support Email: support@heavyquips.com
+- Phone: +1 (406) 505-9795
+- Address: 1249 N Homestead Rd, North Platte, NE 69101
