@@ -1,5 +1,0 @@
-[23-Feb-2025 19:28:08 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/qsgigqid/public_html/saver/connection.php:15) in /home/qsgigqid/public_html/admin/approve/index.php on line 33
-[24-Feb-2025 04:47:51 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/qsgigqid/public_html/saver/connection.php:15) in /home/qsgigqid/public_html/saver/admin/authorization.php on line 38
-[24-Feb-2025 04:47:51 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/qsgigqid/public_html/saver/connection.php:15) in /home/qsgigqid/public_html/admin/approve/index.php on line 33
-[24-Feb-2025 04:47:51 UTC] PHP Warning:  Undefined variable $admin_name in /home/qsgigqid/public_html/components/admin/side.php on line 15
-[24-Feb-2025 04:47:51 UTC] PHP Warning:  Undefined variable $admin_name in /home/qsgigqid/public_html/components/admin/nav.php on line 22
